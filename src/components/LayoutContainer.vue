@@ -1,7 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
-    name: 'CustomCard',
+    name: 'LayoutContainer',
     props: {
         customClass: {
             type: String,
@@ -9,13 +10,12 @@ export default defineComponent({
         },
     },
     setup() {
-       const classes = "border-white border rounded-3xl bg-white bg-opacity-5 backdrop-blur-md shadow-lg p-4";
-       return {classes}
+        const classes = "max-w-[1200px] mx-auto px-4 "
+        return { classes };
     },
-
 });
-</script>
 
+</script>
 
 <template>
     <div :class="[classes, customClass]">

@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue';
 import { useUserStore } from '@/stores/user';
-import CustomCard from '@/components/Card.vue'; // Import the component statically
+import GlasCard from '@/components/GlasCard.vue'; // Import the component statically
 
 export default defineComponent({
   components: {
-    CustomCard,
+    GlasCard,
   },
   setup() {
     const userStore = useUserStore();
@@ -31,13 +31,13 @@ export default defineComponent({
     <div class="bg-red-50 text-red-500 p-3 rounded-lg" v-if="userStore.error">{{ userStore.error }}</div>
     <ul v-else class="flex flex-wrap gap-2">
       <li v-for="user in userStore.users" :key="user.id">
-        <CustomCard>
+        <GlasCard>
           <div>
             <img class="w-[75px] h-[75px] object-cover rounded-full" :src="user.image" alt="avatar">
             <p>{{ user.firstName }} {{ user.lastName }} </p>
             <p class="text-xs opacity-50">{{ user.email }}</p>
           </div>
-        </CustomCard>
+        </GlasCard>
       </li>
     </ul>
   </div>
