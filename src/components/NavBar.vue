@@ -8,7 +8,7 @@
 
     <div class="flex items-center gap-4">
       <HomeButton></HomeButton>
-        <button class="text-primary-dark" id="signInButton">Sign In</button>
+        <button class="text-primary-dark text-lg" id="signInButton">Sign In</button>
       </div>
 
   </nav>
