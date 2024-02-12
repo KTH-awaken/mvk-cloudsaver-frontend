@@ -12,6 +12,8 @@ import LayoutContainer from '@/components/LayoutContainer.vue'
       <nav class="flex items-center gap-4 py-2">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/overview">Overview</RouterLink>
+
       </nav>
     </header>
 
