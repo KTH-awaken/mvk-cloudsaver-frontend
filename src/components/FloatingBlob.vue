@@ -1,7 +1,6 @@
-<template>
-    <div class="floating-blob">
-      <h1>test: {{ blobWidth }}</h1>
-      <img src="@/assets/GreenBlob.png" alt="Floating Blob" :width="blobWidth" :height="blobHeight"/>
+  <template>
+    <div class="floating-blob rotated" :style="blobStyle">
+      <img :src="imgSrc" alt="Floating Blob" :width="blobWidth" :height="blobHeight" />
     </div>
   </template>
   
@@ -9,6 +8,10 @@
   export default {
     name: 'FloatingBlob',
     props: {
+      imgSrc: {
+        type: String,
+        required: true
+      },
       blobWidth: {
         type: Number,
         required: true
@@ -16,25 +19,51 @@
       blobHeight: {
         type: Number,
         required: true
+      },
+      interval: {
+        type: Number,
+        required: true
+      },
+      startX: {
+        type: Number,
+        required: true
+      },
+      startY: {
+        type: Number,
+        required: true
+      },
+      rotation: {
+        type: Number,
+        required: true
+      },
+    },
+    data() {
+      return {
+        currentX: this.startX,
+        currentY: this.startY,
+        intervalId: null,
+      };
+    },
+    computed: {
+      blobStyle() {
+        return {
+          transform: `translate(${this.currentX}px, ${this.currentY}px) rotate(${this.rotation}deg)`,
+          transition: 'transform 10s ease-in-out',
+        };
       }
     },
     mounted() {
       this.animateBlob();
     },
+    beforeUnmount() {
+      clearInterval(this.intervalId);
+    },
     methods: {
       animateBlob() {
-        // Get a reference to the DOM element
-        const blob = this.$el;
-        // Function to change the position of the blob
-        function float() {
-          const x = Math.random() * (window.innerWidth - blob.offsetWidth);
-          const y = Math.random() * (window.innerHeight - blob.offsetHeight);
-          blob.style.transform = `translate(${x}px, ${y}px)`;
-        }
-        // Start the animation
-        float();
-        // Set the float to happen at intervals
-        setInterval(float, 5000); // Adjust the interval as needed
+        this.intervalId = setInterval(() => {
+          this.currentX = Math.random() * (window.innerWidth - this.blobWidth);
+          this.currentY = Math.random() * (window.innerHeight - this.blobHeight);
+        }, this.interval);
       }
     }
   };
@@ -42,8 +71,9 @@
   
   <style scoped>
   .floating-blob {
+    opacity: 70%;
     position: fixed;
-    will-change: transform; /* Optimizes animations */
-    transition: transform 10s ease-in-out; /* Adjust time for speed of movement */
+    will-change: transform;
   }
   </style>
+  
