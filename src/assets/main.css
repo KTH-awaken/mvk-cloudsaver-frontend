@@ -4,5 +4,6 @@
 @tailwind utilities;
 
 :root {
+    --primary : #3e7550;
     --primary-dark : #214A2D;
 }

@@ -29,12 +29,12 @@ export default {
     cursor: pointer; 
     font-family: 'Source Sans Pro', sans-serif; 
     display: inline-block; 
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.10);
+    /* box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.10); */
     transition: background-color 0.3s; 
     font-weight: bold;
 }
 
 .home-button:hover {
-  background-color: #3B7A57; 
+  background-color: var(--primary); 
 }
 </style>
