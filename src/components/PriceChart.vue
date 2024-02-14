@@ -14,7 +14,7 @@ import { defineComponent, ref, watchEffect } from 'vue';
 ChartJS.register(Title, Tooltip, Legend, LineElement, PointElement, CategoryScale, LinearScale);
 
 export default defineComponent({
-    name: 'EnergyChart',
+    name: 'PriceChart',
     components: { Chart: Line },
     setup() {
         const usageStore = useUsageStore();
@@ -25,16 +25,17 @@ export default defineComponent({
 
         watchEffect(() => {
             const clean = usageStore.usage.filter(item => !item.gpu_energy.startsWith('Failed'));
+
             const labels = clean.map(item => new Date(item.timestamp).toLocaleTimeString());
-            const cpuUsageData = clean.map(item => item.gpu_energy).filter(item => !item.startsWith('Failed')).map(item => parseFloat(item));
+            const cpuUsageData = clean.map(item => item.gpu_energy).filter(item => !item.startsWith('Failed')).map(item => parseFloat(item) * 0.75);
             console.log(labels, cpuUsageData);
 
             chartData.value = {
                 labels: labels,
                 datasets: [{
-                    label: 'Energy in Watts',
-                    backgroundColor: '#ffffff',
-                    borderColor: 'rgb(255, 99, 132)',
+                    label: 'Cost in SEK',
+                    backgroundColor: '#ffffff', 
+                    borderColor: 'rgb(54, 162, 235)', 
                     data: cpuUsageData,
                 }],
             };

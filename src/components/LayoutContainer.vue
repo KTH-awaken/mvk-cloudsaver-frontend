@@ -10,7 +10,7 @@ export default defineComponent({
         },
     },
     setup() {
-        const classes = "max-w-[1200px] mx-auto px-4 "
+        const classes = "max-w-[1400px] mx-auto px-4 "
         return { classes };
     },
 });

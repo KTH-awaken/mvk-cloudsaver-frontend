@@ -9,7 +9,7 @@ export default defineComponent({
         },
     },
     setup() {
-       const classes = "border-white border h-auto rounded-3xl bg-white bg-opacity-5 backdrop-blur-md shadow-lg p-6";
+       const classes = "border-white border h-auto rounded-3xl bg-white bg-opacity-5 backdrop-blur-3xl shadow-lg p-6";
        return {classes}
     },
 

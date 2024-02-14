@@ -29,9 +29,7 @@ export const useUsageStore = defineStore({
             this.isLoading = true;
             try {
                 const url = endpoint
-                const response = await axios.get(url);     
-                console.log(response.data);
-                                           
+                const response = await axios.get(url);                                                
                 this.usage = response.data;
             } catch (error) {
                 this.error =
