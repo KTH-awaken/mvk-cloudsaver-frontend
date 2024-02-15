@@ -1,6 +1,8 @@
 <!-- HomeButton.vue -->
 <template>
-  <button class="home-button" @click="navigateToO">Optimize Your Cloud</button>
+  <RouterLink to="/overview">
+    <button class="home-button" @click="navigateToO">Optimize Your Cloud</button>
+  </RouterLink>
 </template>
 
 <script>
