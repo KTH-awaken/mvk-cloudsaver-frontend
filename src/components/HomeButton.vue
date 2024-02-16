@@ -1,6 +1,6 @@
 <!-- HomeButton.vue -->
 <template>
-  <RouterLink to="/overview">
+  <RouterLink to="/tutorial">
     <button class="home-button" @click="navigateToO">Optimize Your Cloud</button>
   </RouterLink>
 </template>
@@ -27,7 +27,6 @@ export default {
     border-radius: 25px; 
     font-size: 20px; 
     text-decoration: none; 
-    border: none; 
     cursor: pointer; 
     font-family: 'Source Sans Pro', sans-serif; 
     display: inline-block; 

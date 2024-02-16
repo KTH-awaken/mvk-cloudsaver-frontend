@@ -34,6 +34,5 @@ export default defineComponent({
     padding-left: 70px;
     padding-top: 320px; 
     font-family: 'Source Sans Pro', sans-serif;
-     
 }
 </style>
