@@ -2,25 +2,34 @@
 import LayoutContainer from '@/components/LayoutContainer.vue';
 import { defineComponent,ref } from 'vue'
 import CopyCommandBox from '@/components/CopyCommandBox.vue';
+import Terminal from '@/assets/YourCloudVmTerminal.png';
+import GlasCard from '@/components/GlasCard.vue';
 
 export default defineComponent({
     components: {
         LayoutContainer,
         CopyCommandBox,
+        GlasCard,
+    },
+    data(){
+        return{
+            TerminalImg: Terminal,
+        }
     },
     setup() {
     const step = ref(1);
 
     function nextStep() {
-      if (step.value < 4) step.value++;
+        if (step.value < 4) step.value++;
     }
-
+    
     function prevStep() {
-      if (step.value > 1) step.value--;
+        if (step.value > 1) step.value--;
     }
-
+    
     return { step, nextStep, prevStep };
-  },
+},
+
 })
 
 </script>
@@ -49,7 +58,7 @@ export default defineComponent({
                 
             </div>
             <!-- tutorial content -->
-            <div class="h-[600px] ">
+            <div class="h-[650px] ">
                 <!-- Your step content goes here -->
                 <div v-if="step === 1">
                     <CopyCommandBox title="Deploy on Virtual Machine" line1="docker pull marcusokodugha/my-flask-app:tag" line2="docker run -it -p 8080:8080 --name cloudsaver-container marcusokodugha/my-flask-app:tag"></CopyCommandBox>
@@ -57,13 +66,18 @@ export default defineComponent({
                     <CopyCommandBox title="Deploy on Deployment" line1="marcusokodugha/my-flask-app:tag" line2=""></CopyCommandBox>
                 </div>
                 <div v-if="step === 2">
-                    Step 2 Content
+                        <img src="@/assets/YourCloudVmTerminal.png">
+                        <div class="middle-text w-full">Or</div>
+                        <GlasCard >
+                            <div class="medium-text">Deployment</div>
+                            <div>Create a deployment using the copied image name</div>
+                        </GlasCard>
                 </div>
                 <div v-if="step === 3">
                     Step 3 Content
                 </div>
             </div>
-            <div class="bottom-buttons ">
+            <div class="bottom-buttons pl-6 pr-6">
                 <button @click="prevStep" class="bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">Previous</button>
                 <button @click ="nextStep" class="bg-primary-dark text-white p-2 rounded-md w-1 button hover:bg-primary">Next</button>
             </div>
@@ -73,6 +87,10 @@ export default defineComponent({
 </template>
 
 <style scoped>
+
+.container{
+    width: 800px;
+}
 
 .top-text{
     font-weight: bold;
@@ -89,6 +107,12 @@ export default defineComponent({
     padding: 20px;
     text-align: center;
 }
+.medium-text{
+    font-weight: bold;
+    font-size: 22px; 
+    color: black;
+    font-family: 'Source Sans Pro', sans-serif;
+    }
 .bottom-buttons{
     display: flex;
     width: 800px;

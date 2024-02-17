@@ -1,11 +1,13 @@
 <script lang="ts">
 import { defineComponent,ref } from 'vue'
 import GlasCard from '@/components/GlasCard.vue'
+import ContentCopy from 'vue-material-design-icons/ContentCopy.vue';
 
 export default defineComponent({
     name: 'CopyCommandBox',
     components: {
       GlasCard,  
+      ContentCopy,
     },
     props: {
         title: String,
@@ -30,12 +32,13 @@ export default defineComponent({
 
 <template>
         <GlasCard class="container" >
-            <div class="medium-text">Deploy on Virtual Machine </div>
+            <div class="medium-text">{{ title }}</div>
             <div>{{ line1 }}</div>
             <div>{{ line2 }}</div>
                 <div class="flex w-full justify-end pt-6">
-                    <button @click="copyToClipboard" class="bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">
+                    <button @click="copyToClipboard" class="flex justify-around bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">
                         Copy
+                        <ContentCopy></ContentCopy>
                     </button>
                 </div>
         </GlasCard>
