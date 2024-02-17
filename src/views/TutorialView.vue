@@ -62,15 +62,19 @@ export default defineComponent({
                 <!-- Your step content goes here -->
                 <div v-if="step === 1">
                     <CopyCommandBox title="Deploy on Virtual Machine" line1="docker pull marcusokodugha/my-flask-app:tag" line2="docker run -it -p 8080:8080 --name cloudsaver-container marcusokodugha/my-flask-app:tag"></CopyCommandBox>
-                    <div class="middle-text w-full">Or</div>
+                    <div class="middle-text w-full p-4">Or</div>
                     <CopyCommandBox title="Deploy on Deployment" line1="marcusokodugha/my-flask-app:tag" line2=""></CopyCommandBox>
                 </div>
                 <div v-if="step === 2">
+                    <GlasCard>
+                        <div class="medium-text">Run on Virtual Machine</div>
+                        <div class="pb-2">Run the copied commands on a virtual machine command line interface inside you're cloud</div>
                         <img src="@/assets/YourCloudVmTerminal.png">
                         <div class="middle-text w-full">Or</div>
-                        <GlasCard >
-                            <div class="medium-text">Deployment</div>
-                            <div>Create a deployment using the copied image name</div>
+                        <!-- <GlasCard > -->
+                            <div class="medium-text pb-2">Create a Deployment</div>
+                            <div>If you're cloud supports creating a deployment using docker images. Paste the previously copied img</div>
+                            <!-- </GlasCard> -->
                         </GlasCard>
                 </div>
                 <div v-if="step === 3">
@@ -104,7 +108,6 @@ export default defineComponent({
     font-size: 35px; 
     color: var(--primary-dark);
     font-family: 'Source Sans Pro', sans-serif;
-    padding: 20px;
     text-align: center;
 }
 .medium-text{
