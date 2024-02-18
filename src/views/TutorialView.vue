@@ -46,8 +46,8 @@ export default defineComponent({
             <div class="h-10 top-text">
                 <!-- Your step content goes here -->
                 <div v-if="step === 1">Copy docker image</div>
-                <div v-if="step === 2">Deploy image to you're cloud</div>
-                <div v-if="step === 3">Name you're cloud resource</div>
+                <div v-if="step === 2">Deploy image to your cloud</div>
+                <div v-if="step === 3">Name your cloud resource</div>
             </div>
            <!-- stepper -->
 
@@ -79,18 +79,18 @@ export default defineComponent({
                 <div v-if="step === 2">
                     <GlasCard class="container2">
                         <div class="medium-text">Run on Virtual Machine</div>
-                        <div class="pb-2 small-text">Run the copied commands on a virtual machine command line interface inside you're cloud</div>
+                        <div class="pb-2 small-text">Run the copied commands on a virtual machine command line interface inside your cloud</div>
                         <img style="width: 100%;" src="@/assets/YourCloudVmTerminal.png">
                         <div class="middle-text w-full pt-3 -mb-2">Or</div>
                             <div class="medium-text pb-2">Create a Deployment</div>
-                            <div class="small-text">If you're cloud supports creating a deployment using docker images. Paste the previously copied img</div>
+                            <div class="small-text">If your cloud supports creating a deployment using docker images. Paste the previously copied img</div>
                         </GlasCard>
                 </div>
                 <div v-if="step === 3">
                     <div class="pt-48">
                         <GlasCard class="">
-                            <div class="medium-text">Name you're cloud resource</div>
-                            <div class="small-text">Name the resource you want to monitor on you're cloud</div>
+                            <div class="medium-text">Name your cloud resource</div>
+                            <div class="small-text">Name the resource you want to monitor on your cloud</div>
                             <input class="input-name" type="text" placeholder="Resource Name">
                         </GlasCard>
                     </div>
