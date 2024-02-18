@@ -4,7 +4,7 @@ import { defineComponent,ref } from 'vue'
 import CopyCommandBox from '@/components/CopyCommandBox.vue';
 import Terminal from '@/assets/YourCloudVmTerminal.png';
 import GlasCard from '@/components/GlasCard.vue';
-
+import { useRouter } from 'vue-router';
 export default defineComponent({
     components: {
         LayoutContainer,
@@ -18,9 +18,16 @@ export default defineComponent({
     },
     setup() {
     const step = ref(1);
+    const router = useRouter();
 
     function nextStep() {
-        if (step.value < 4) step.value++;
+        if (step.value < 3){
+            step.value++;
+        }else{
+            router.push('/overview');
+        }
+
+
     }
     
     function prevStep() {
@@ -39,11 +46,12 @@ export default defineComponent({
             <div class="h-10 top-text">
                 <!-- Your step content goes here -->
                 <div v-if="step === 1">Copy docker image</div>
-                <div v-if="step === 2">Deploy image to your cloud</div>
+                <div v-if="step === 2">Deploy image to you're cloud</div>
                 <div v-if="step === 3">Name you're cloud resource</div>
             </div>
            <!-- stepper -->
-            <div class="stepper-container" style="margin-bottom: 50px;">
+
+               <div class="stepper-container" style="margin-bottom: 20px;">
                 <div class="stepper" :class="{ 'step-complete': step >= 1 }">
                     <div class="stepper-small-circle" :class="{ 'step-complete-small': step >= 1 }"></div>
                 </div>
@@ -58,32 +66,39 @@ export default defineComponent({
                 
             </div>
             <!-- tutorial content -->
-            <div class="h-[650px] ">
+            <div class="h-[680px]">
                 <!-- Your step content goes here -->
                 <div v-if="step === 1">
-                    <CopyCommandBox title="Deploy on Virtual Machine" line1="docker pull marcusokodugha/my-flask-app:tag" line2="docker run -it -p 8080:8080 --name cloudsaver-container marcusokodugha/my-flask-app:tag"></CopyCommandBox>
-                    <div class="middle-text w-full p-4">Or</div>
-                    <CopyCommandBox title="Deploy on Deployment" line1="marcusokodugha/my-flask-app:tag" line2=""></CopyCommandBox>
+                    <GlasCard class="container2">
+
+                        <CopyCommandBox title="Deploy on Virtual Machine" line1="docker pull marcusokodugha/my-flask-app:tag" line2="docker run -it -p 8080:8080 --name cloudsaver-container marcusokodugha/my-flask-app:tag"></CopyCommandBox>
+                        <div class="middle-text w-full p-4">Or</div>
+                        <CopyCommandBox title="Deploy using Deployment" line1="marcusokodugha/my-flask-app:tag" line2=""></CopyCommandBox>
+                    </GlasCard>    
                 </div>
                 <div v-if="step === 2">
-                    <GlasCard>
+                    <GlasCard class="container2">
                         <div class="medium-text">Run on Virtual Machine</div>
-                        <div class="pb-2">Run the copied commands on a virtual machine command line interface inside you're cloud</div>
-                        <img src="@/assets/YourCloudVmTerminal.png">
-                        <div class="middle-text w-full">Or</div>
-                        <!-- <GlasCard > -->
+                        <div class="pb-2 small-text">Run the copied commands on a virtual machine command line interface inside you're cloud</div>
+                        <img style="width: 100%;" src="@/assets/YourCloudVmTerminal.png">
+                        <div class="middle-text w-full pt-3 -mb-2">Or</div>
                             <div class="medium-text pb-2">Create a Deployment</div>
-                            <div>If you're cloud supports creating a deployment using docker images. Paste the previously copied img</div>
-                            <!-- </GlasCard> -->
+                            <div class="small-text">If you're cloud supports creating a deployment using docker images. Paste the previously copied img</div>
                         </GlasCard>
                 </div>
                 <div v-if="step === 3">
-                    Step 3 Content
+                    <div class="pt-48">
+                        <GlasCard class="">
+                            <div class="medium-text">Name you're cloud resource</div>
+                            <div class="small-text">Name the resource you want to monitor on you're cloud</div>
+                            <input class="input-name" type="text" placeholder="Resource Name">
+                        </GlasCard>
+                    </div>
                 </div>
             </div>
             <div class="bottom-buttons pl-6 pr-6">
                 <button @click="prevStep" class="bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">Previous</button>
-                <button @click ="nextStep" class="bg-primary-dark text-white p-2 rounded-md w-1 button hover:bg-primary">Next</button>
+                <button @click ="nextStep" class="bg-primary-dark text-white p-2 rounded-md w-1 button hover:bg-primary">{{ step < 3 ? 'Next' : 'Finish' }}</button>
             </div>
     </div>
     </LayoutContainer>
@@ -92,9 +107,28 @@ export default defineComponent({
 
 <style scoped>
 
-.container{
-    width: 800px;
+.input-name{
+    margin-top: 40px;
+    width: 100%;
+    outline: solid 3px var(--primary-dark);
+    padding: 20px;
+    border-radius: 10px;
+    
+    
+    background: transparent;
+
 }
+::placeholder {
+  color: var(--primary-dark);
+  opacity: 1; 
+}
+.container2{
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 .top-text{
     font-weight: bold;
@@ -113,9 +147,15 @@ export default defineComponent({
 .medium-text{
     font-weight: bold;
     font-size: 22px; 
-    color: black;
+    color: var(--primary-dark);
     font-family: 'Source Sans Pro', sans-serif;
-    }
+    text-align: start;
+    width: 100%;
+}
+.small-text{
+    text-align: start;
+    width: 100%;
+}
 .bottom-buttons{
     display: flex;
     width: 800px;
