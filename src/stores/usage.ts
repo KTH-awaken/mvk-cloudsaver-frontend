@@ -12,7 +12,7 @@ export interface Usage {
     network_usage_sent: number,
     network_usage_recv: number
 }
-const endpoint = "http://localhost:8080/api/systeminfo/30"
+const endpoint = "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/30"
 
 export const useUsageStore = defineStore({
     id: 'usage',
