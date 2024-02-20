@@ -171,29 +171,29 @@ export default defineComponent({
   justify-content: space-between; 
   position: relative;
   width: 50%; 
-
 }
 .line { 
     width: 100%;
     height: 3px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 .line-before{
-    background-color: hwb(116 64% 17%);
+    background-color: hwb(120 60% 37%);
 }
 .line-after{
     background-color: var(--primary-dark);
 }
  
-/* small circle */
 .stepper {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  /* background-color: #d1d5db; */
   position: relative; 
-  z-index: 1; /* Ensures the circles are above the line */
-  border: 3px solid hwb(116 64% 17%);
+  z-index: 1; 
+  /* border: 3px solid hwb(116 64% 17%); */
+  border: 3px solid hwb(120 60% 37%);
   aspect-ratio: 1/1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 
   display: flex;
   align-items: center;
@@ -204,7 +204,8 @@ export default defineComponent({
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: hwb(116 64% 17%);
+  /* background-color: hwb(116 64% 17%); */
+  background-color: hwb(120 60% 37%);
   position: relative; /* Needed for z-index to work */
   z-index: 1; /* Ensures the circles are above the line */
 }
