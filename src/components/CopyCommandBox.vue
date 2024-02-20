@@ -48,7 +48,6 @@ export default defineComponent({
         outline: solid 3px var(--primary-dark);
         padding: 20px;
         border-radius: 10px;
-
     }
 
     .medium-text{
