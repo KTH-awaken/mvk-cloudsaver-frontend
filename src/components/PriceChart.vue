@@ -24,10 +24,12 @@ export default defineComponent({
 
 
         watchEffect(() => {
-            const clean = usageStore.usage.filter(item => !item.gpu_energy.startsWith('Failed'));
+            if(usageStore.usage.usage == undefined || usageStore.usage.usage.length == 0){
+                return;
+            }
 
-            const labels = clean.map(item => new Date(item.timestamp).toLocaleTimeString());
-            const cpuUsageData = clean.map(item => item.gpu_energy).filter(item => !item.startsWith('Failed')).map(item => parseFloat(item) * 0.75);
+            const labels = usageStore.usage.usage.map(item => new Date(item.timestamp).toLocaleTimeString());
+            const cpuUsageData = usageStore.usage.usage.map(item => item.cpu_usage);
             console.log(labels, cpuUsageData);
 
             chartData.value = {

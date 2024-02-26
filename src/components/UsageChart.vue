@@ -17,16 +17,23 @@ export default defineComponent({
     name: 'EnergyChart',
     components: { Chart: Line },
     setup() {
+        console.log("hello1")
         const usageStore = useUsageStore();
+        // usageStore.fetchUsage();
         const chartData = ref({ labels: [] as any, datasets: [] as any });
 
 
 
 
         watchEffect(() => {
-            const clean = usageStore.usage.filter(item => !item.gpu_energy.startsWith('Failed'));
-            const labels = clean.map(item => new Date(item.timestamp).toLocaleTimeString());
-            const cpuUsageData = clean.map(item => item.gpu_energy).filter(item => !item.startsWith('Failed')).map(item => parseFloat(item));
+            if(usageStore.usage.usage == undefined || usageStore.usage.usage.length == 0){
+                return;
+            }
+
+            console.log("hello3")
+            console.log(usageStore.usage.usage);
+            const labels = usageStore.usage.usage.map(item => new Date(item.timestamp).toLocaleTimeString());
+            const cpuUsageData = usageStore.usage.usage.map(item => item.cpu_usage);
             console.log(labels, cpuUsageData);
 
             chartData.value = {

@@ -32,7 +32,7 @@ export default defineComponent({
 
         <GlasCard class="w-full mt-3">
             <div class="outlined-container-small mb-6">
-                <h3 class="mb-4 medium-text">Resource cbhcloud</h3>
+                <h3 class="mb-4 medium-text">{{ usageStore.usage.resource_name }} Total Usage</h3>
                 <div class="flex gap-10">
                     <div class="flex flex-col justify-center items-center">
                         <h1 class="font-semibold text-3xl">4973</h1>

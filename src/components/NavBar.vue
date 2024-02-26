@@ -10,7 +10,7 @@
       </RouterLink>
 
       <div v-if="user">
-        Hello, {{ user.email }}!
+        {{ user.email }}
         <button @click="logout">Log out</button>
       </div>
       <div v-else>
@@ -31,13 +31,13 @@
 
 </style>
 
-  <script lang="ts">
+<script lang="ts">
   import { defineComponent, onMounted, ref,Ref } from 'vue';
   import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
   import { logoutUser } from '@/stores/login'; // Justera importvägen efter din faktiska projektstruktur
 
   // Definiera en reaktiv referens som kan hålla en User eller null
-  const currentUser: Ref<User | null> = ref(null);
+  const currentUser: Ref<any | null> = ref(null);
 
   // Funktion för att sätta currentUser till en användare eller null
   function setUser(user: User | null) {
