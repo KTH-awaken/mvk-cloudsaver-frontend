@@ -32,9 +32,10 @@
 </style>
 
   <script lang="ts">
-  import { defineComponent, onMounted, ref,Ref } from 'vue';
-  import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
-  import { logoutUser } from '@/stores/login'; // Justera importvägen efter din faktiska projektstruktur
+  import {defineComponent, onMounted, type Ref, ref} from 'vue';
+  import { getAuth, onAuthStateChanged,  } from 'firebase/auth';
+  import { logoutUser } from '@/stores/login';
+  import type {User} from "@/stores/user"; // Justera importvägen efter din faktiska projektstruktur
 
   // Definiera en reaktiv referens som kan hålla en User eller null
   const currentUser: Ref<User | null> = ref(null);
