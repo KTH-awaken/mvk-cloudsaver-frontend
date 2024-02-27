@@ -1,6 +1,7 @@
 // Importera Firebase-moduler
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword ,signOut } from 'firebase/auth';
+import router from "@/router";
 
 // Firebase-konfiguration
 const firebaseConfig = {
@@ -40,6 +41,7 @@ export function loginUser(email: string, password: string): void {
             // Inloggningen lyckades
             const user = userCredential.user;
             console.log('Inloggning lyckades', user);
+            router.push({ name: 'LandingPage' });
             // Hantera framgångsrik inloggning här, t.ex. omdirigera användaren
         })
         .catch((error) => {

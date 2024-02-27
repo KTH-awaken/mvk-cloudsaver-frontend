@@ -15,6 +15,7 @@ interface UsageRecord {
     cpu_usage: string;
     memory_usage: string;
     timestamp: number;
+    energy_consumption: string;//this will be in kWh
   }
 
 //tood by till rikitg resource name

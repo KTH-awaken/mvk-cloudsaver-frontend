@@ -31,7 +31,7 @@ export default defineComponent({
     <LayoutContainer>
 
         <GlasCard class="w-full mt-3">
-            <div class="outlined-container-small mb-6">
+            <div class="text-container-small mb-6">
                 <h3 class="mb-4 medium-text">{{ usageStore.usage.resource_name }} Total Usage</h3>
                 <div class="flex gap-10">
                     <div class="flex flex-col justify-center items-center">
@@ -46,7 +46,8 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
-            <div class="flex gap-3 justify-between m-t-5">
+
+            <div class="flex flex-col gap-3 justify-between m-t-5">
                 <div class="outlined-container w-full mb-3">
                     <p class="mb-4 text-lg">Energy Consumption Overview</p>
                     <EnergyChart class="min-h-80" />
@@ -67,8 +68,7 @@ export default defineComponent({
         padding: 20px;
         border-radius: 10px;
     }
-    .outlined-container-small{
-
+    .text-container-small{
         max-width: fit-content;
     }
     .medium-text{
