@@ -17,6 +17,7 @@ export default defineComponent({
             const fullText = `${props.line1}\n${props.line2}`;
             navigator.clipboard.writeText(fullText).then(() => {
                 console.log('Text copied to clipboard');
+                //todo add popup
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
             });
