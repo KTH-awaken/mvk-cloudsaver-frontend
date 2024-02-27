@@ -24,23 +24,21 @@ const endpoint = "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systemin
 export const useUsageStore = defineStore({
     id: 'usage',
     state: () => ({
-        usage: {} as PodUsage,
+        usage: [] as PodUsage[],
         isLoading: false,
         error: null as string | null,
     }),
     actions: {
     
         async fetchUsage() {
-            this.usage = {} as PodUsage;
+            this.usage = [];
             this.error = null;
             this.isLoading = true;
             try {
                 const url = endpoint
                 const response = await axios.get(url);                                                
-                this.usage = response.data[0];
-        console.log("hello2")
+                this.usage = response.data;
 
-                console.log(response.data[0])
             } catch (error) {
                 this.error =
                     error instanceof Error
