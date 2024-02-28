@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted ,computed} from 'vue'
 import GlasCard from '@/components/GlasCard.vue'
 import { useUsageStore } from '@/stores/usage';
 import EnergyChart from "../components/UsageChart.vue";
@@ -17,12 +17,19 @@ export default defineComponent({
     setup: () => {
         const usageStore = useUsageStore()
 
+        const resourceName = computed(() => {
+            // Check if usage data is available and has at least one record
+            if (usageStore.usage.length > 0 && usageStore.usage[0].resource_name) {
+                return usageStore.usage[0].resource_name;
+            }
+            return 'Unknown'; // Default value or handling when no data is available
+        });
         onMounted(() => {
             usageStore.fetchUsage()
-            console.log(usageStore.usage);
+            console.log("XXXXXXmdsdddmd"+usageStore.usage);
         })
 
-        return { usageStore }
+        return { usageStore,resourceName }
     }
 })
 </script>
@@ -31,8 +38,8 @@ export default defineComponent({
     <LayoutContainer>
 
         <GlasCard class="w-full mt-3">
-            <div class="outlined-container-small mb-6">
-                <h3 class="mb-4 medium-text">{{ usageStore.usage.resource_name }} Total Usage</h3>
+            <div class="text-container-small mb-6">
+                <h3 class="mb-4 medium-text">{{ resourceName }} Total Usage</h3>
                 <div class="flex gap-10">
                     <div class="flex flex-col justify-center items-center">
                         <h1 class="font-semibold text-3xl">4973</h1>
@@ -46,7 +53,8 @@ export default defineComponent({
                     </div>
                 </div>
             </div>
-            <div class="flex gap-3 justify-between m-t-5">
+
+            <div class="flex flex gap-3 justify-between m-t-5">
                 <div class="outlined-container w-full mb-3">
                     <p class="mb-4 text-lg">Energy Consumption Overview</p>
                     <EnergyChart class="min-h-80" />
@@ -67,8 +75,7 @@ export default defineComponent({
         padding: 20px;
         border-radius: 10px;
     }
-    .outlined-container-small{
-
+    .text-container-small{
         max-width: fit-content;
     }
     .medium-text{

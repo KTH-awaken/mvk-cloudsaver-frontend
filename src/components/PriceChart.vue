@@ -23,25 +23,25 @@ export default defineComponent({
 
 
 
-        watchEffect(() => {
-            if(usageStore.usage.usage == undefined || usageStore.usage.usage.length == 0){
-                return;
-            }
+        // watchEffect(() => { //TODO avkomentera när price fins
+        //     if(usageStore.usage.usage == undefined || usageStore.usage.usage.length == 0){
+        //         return;
+        //     }
 
-            const labels = usageStore.usage.usage.map(item => new Date(item.timestamp).toLocaleTimeString());
-            const cpuUsageData = usageStore.usage.usage.map(item => item.cpu_usage);
-            console.log(labels, cpuUsageData);
+        //     const labels = usageStore.usage.usage.map(item => new Date(item.timestamp).toLocaleTimeString());
+        //     const cpuUsageData = usageStore.usage.usage.map(item => item.cpu_usage);
+        //     console.log(labels, cpuUsageData);
 
-            chartData.value = {
-                labels: labels,
-                datasets: [{
-                    label: 'Cost in SEK',
-                    backgroundColor: '#ffffff', 
-                    borderColor: 'rgb(54, 162, 235)', 
-                    data: cpuUsageData,
-                }],
-            };
-        });
+        //     chartData.value = {
+        //         labels: labels,
+        //         datasets: [{
+        //             label: 'Cost in SEK',
+        //             backgroundColor: '#ffffff', 
+        //             borderColor: 'rgb(54, 162, 235)', 
+        //             data: cpuUsageData,
+        //         }],
+        //     };
+        // });
 
         const chartOptions = ref({
             responsive: true,
