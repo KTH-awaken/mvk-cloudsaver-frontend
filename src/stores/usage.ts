@@ -1,8 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-
-
 export interface PodUsage {
     custom_name: string;
     namespace: string;
@@ -15,11 +13,10 @@ interface UsageRecord {
     cpu_usage: string;
     memory_usage: string;
     timestamp: number;
-    energy_consumption: string;//this will be in kWh
   }
 
-//tood by till rikitg resource name
-const endpoint = "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/AFRY/30"
+//todo by till rikitg resource name
+const endpoint = "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/AFRY"
 
 export const useUsageStore = defineStore({
     id: 'usage',
@@ -38,7 +35,6 @@ export const useUsageStore = defineStore({
                 const url = endpoint
                 const response = await axios.get(url);                                                
                 this.usage = response.data;
-
             } catch (error) {
                 this.error =
                     error instanceof Error

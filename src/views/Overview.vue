@@ -26,7 +26,7 @@ export default defineComponent({
         });
         onMounted(() => {
             usageStore.fetchUsage()
-            console.log("XXXXXX"+usageStore.usage);
+            console.log("XXXXXXmdsdddmd"+usageStore.usage);
         })
 
         return { usageStore,resourceName }
@@ -54,7 +54,7 @@ export default defineComponent({
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3 justify-between m-t-5">
+            <div class="flex flex gap-3 justify-between m-t-5">
                 <div class="outlined-container w-full mb-3">
                     <p class="mb-4 text-lg">Energy Consumption Overview</p>
                     <EnergyChart class="min-h-80" />

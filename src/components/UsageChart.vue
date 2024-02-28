@@ -9,17 +9,7 @@
   </template>
   
   <script lang="ts">
-  import { Line } from 'vue-chartjs';
-  import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    LineElement,
-    PointElement,
-    CategoryScale,
-    LinearScale
-  } from 'chart.js';
+  import { Line  } from 'vue-chartjs';
   import { useUsageStore } from '@/stores/usage';
   import {
     defineComponent,
@@ -57,95 +47,97 @@ interface Dataset {
   fill: boolean;
 }
 
-const getRandomColor = (): string => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+function djinkigkahnGineusGetColor(name: string){
+    let hash = 0;
+    for (let i =0; i <name.length; i++){
+        const char = name.charCodeAt(i);
+        hash = (hash <<5) - hash +char;
+        hash = hash & hash;
     }
-    return color;
-};
+    let colorToReturn ='#';
+    for (let i = 0; i< 3; i++){
+      const value = (hash>> (i * 8)) & 0xFF;
+      colorToReturn += ('00' + value.toString(16)).slice(-2)
+    }
+
+    return colorToReturn;
+}
   
-  export default defineComponent({
-    name: 'EnergyChart',
-    components: { Chart: Line },
-    setup() {
-      const usageStore = useUsageStore();
-    //   const chartData = ref({ labels: [], datasets: [] });
+export default defineComponent({
+  name: 'EnergyChart',
+  components: { Chart: Line },
+
+  setup() {
+    const usageStore = useUsageStore();
     const chartData = ref<ChartData>({ labels: [], datasets: [] });
-      const selectedNamespaces = ref({});
-  
-      // Fetch the usage data when the component is mounted
-      onMounted(() => {
-        usageStore.fetchUsage();
-      });
-  
-      // Reactive effect to update the chart data when the usage data changes
-      watch(() => usageStore.usage, (newUsage: PodUsage[]) => {
-        if (newUsage && newUsage.length > 0) {
-          const namespaceData: Record<string, number[]> = {};
-  
-          // Group usage records by namespace
-          newUsage.forEach(podUsage => {
-            const namespace = podUsage.namespace;
-            if (!namespaceData[namespace]) {
-              namespaceData[namespace] = [];
-            }
-            podUsage.usage.forEach(record => {
-              namespaceData[namespace].push(parseFloat(record.energy_consumption));
-            });
-          });
-  
-          // Generate datasets for the chart
-          chartData.value.datasets = Object.entries(namespaceData).map(([namespace, data]) => ({
-            label: namespace,
-            data: data,
-            borderColor: getRandomColor(),
-            fill: false,
-          }));
-  
-          // Set the labels for the x-axis
-          chartData.value.labels = newUsage.map(podUsage => podUsage.usage.map(record => new Date(record.timestamp).toLocaleTimeString())).flat();
+
+    // Fetch the usage data when the component is mounted
+    onMounted(() => {
+    usageStore.fetchUsage();
+    });
+
+    // Reactive effect to update the chart data when the usage data changes
+    watch(() => usageStore.usage, (newUsage: PodUsage[]) => {
+    if (newUsage && newUsage.length > 0) {
+        const namespaceData: Record<string, number[]> = {};
+
+        // Group usage records by namespace
+        newUsage.forEach(podUsage => {
+        const namespace = podUsage.namespace;
+        if (!namespaceData[namespace]) {
+            namespaceData[namespace] = [];
         }
-      }, { immediate: true });
-  
-
-      //Chart options
-            const chartOptions = ref({
-        responsive: true,
-        plugins: {
-            legend: {
-            display: true,
-            },
-            title: {
-            display: true,
-            text: 'Energy Consumption Chart',
-            },
-        },
-        scales: {
-            y: {
-            title: {
-                display: true,
-                text: 'Energy Consumption (kWh)',
-            },
-            },
-        },
+        podUsage.usage.forEach(record => {
+            namespaceData[namespace].push(parseFloat(record.energy_consumption));
+        });
         });
 
-
-        //Total usage
-        const totalUsage = computed(() => {
-        return chartData.value.datasets.reduce((total, dataset) => {
-            return total + dataset.data.reduce((sum, value) => sum + value, 0);
-        }, 0);
-        });
-  
-      return {
-        chartData,
-        chartOptions,
-        totalUsage
-      };
+        // Generate datasets for the chart
+        chartData.value.datasets = Object.entries(namespaceData).map(([namespace, data]) => ({
+        label: namespace,
+        data: data,
+        borderColor: djinkigkahnGineusGetColor(namespace),
+        fill: false,
+        }));
+        // Set the labels for the x-axis
+        chartData.value.labels = newUsage.map(podUsage => podUsage.usage.map(record => new Date(record.timestamp).toLocaleTimeString())).flat();
     }
-  });
-  </script>
+    }, { immediate: true });
+
+    //Chart options
+  const chartOptions = ref({
+    responsive: true,
+    plugins: {
+        legend: {
+        display: true,
+        },
+        title: {
+        display: true,
+        text: 'Energy Consumption Chart',
+        },
+    },
+    scales: {
+        y: {
+        title: {
+            display: true,
+            text: 'Energy Consumption (kWh)',
+        },
+        },
+    },
+    });
+    //Total usage
+    const totalUsage = computed(() => {
+    return chartData.value.datasets.reduce((total, dataset) => {
+        return total + dataset.data.reduce((sum, value) => sum + value, 0);
+    }, 0);
+    });
+
+    return {
+    chartData,
+    chartOptions,
+    totalUsage
+    };
+}
+});
+</script>
   

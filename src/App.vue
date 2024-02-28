@@ -6,6 +6,9 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import WelcomeMessage from "@/components/WelcomeMessage.vue";
 import Background from "@/components/Background.vue";
 import GlasCard from './components/GlasCard.vue';
+import { useUsageStore } from '@/stores/usage';
+const usageStore = useUsageStore()
+usageStore.fetchUsage()
 </script>
 <template>
   
