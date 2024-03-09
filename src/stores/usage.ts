@@ -13,6 +13,9 @@ interface UsageRecord {
     cpu_usage: string;
     memory_usage: string;
     timestamp: number;
+    cpu_percentage: string;
+    energy_consumption: string;
+
   }
 
 //todo by till rikitg resource name
