@@ -14,12 +14,10 @@ usageStore.fetchUsage()
   
   <Background />
     <NavBar />
-    <!-- Navbar here -->
     <header>
 
     </header>
     
-    <!-- Route view -->
     <RouterView />
 
 </template>
