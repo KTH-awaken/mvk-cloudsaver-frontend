@@ -1,55 +1,87 @@
-import { defineStore } from "pinia";
-import axios from "axios";
+// import { defineStore } from 'pinia';
+// import axios from 'axios';
 
-export interface PodUsage {
-    custom_name: string;
-    namespace: string;
-    pod_name: string;
-    resource_name: string;
-    usage: UsageRecord[];
+
+// interface Data{
+//     resource_name:string,
+//     label: string,  
+//     custom_name:string,
+//     usage:{
+//       cpu_usage:string,
+//       memory_usage: string,
+//       timestamp: number,
+//       cpu_percentage:number,
+//       energy_consumption: string
+//     }[],
+//   }
+
+//   // Use the correct endpoint for your API
+// const endpoint = "http://localhost:8080/api/AFRY/100"
+
+// export const useUsageStore = defineStore('usage', {
+//     state: () => ({
+//       data: [] as Data[],
+//       isLoading: false,
+//       error: null as string | null,
+//     }),
+//     actions: {
+//       async fetchUsage() {
+//         this.data = [];
+//         this.isLoading = true;
+//         this.error = null;
+//         try {
+//           const response = await axios.get(endpoint);
+//           // Directly assigning fetched data assuming it matches the Data interface
+//           this.data = response.data;
+//         } catch (error) {
+//           this.error = error instanceof Error ? error.message : "An error occurred";
+//           console.error(error);
+//         } finally {
+//           this.isLoading = false;
+//         }
+//       },
+//     },
+//   });
+
+import { defineStore } from 'pinia';
+import axios from 'axios';
+
+interface UsageData {
+  cpu_usage: string;
+  memory_usage: string;
+  timestamp: number;
+  cpu_percentage: number;
+  energy_consumption: string;
 }
-interface UsageRecord {
-    _id: string;
-    cpu_usage: string;
-    memory_usage: string;
-    timestamp: number;
-    cpu_percentage: string;
-    energy_consumption: string;
+
+export interface Data {
+  resource_name: string;
+  label: string;
+  custom_name: string;
+  usage: UsageData[];
 }
 
-//todo by till rikitg resource name
-const endpoint =
-    // "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/AFRY";
-    "http://localhost:8080/api/systeminfo/AFRY";
+const endpoint = "http://localhost:8080/api/AFRY/100";
 
-export const useUsageStore = defineStore({
-    id: "usage",
-    state: () => ({
-        usage: [] as PodUsage[],
-        isLoading: false,
-        error: null as string | null,
-    }),
-    actions: {
-        async fetchUsage() {
-            this.usage = [];
-            this.error = null;
-            this.isLoading = true;
-
-            try {
-                const url = endpoint;
-                const response = await axios.get(url);
-                this.usage = response.data;
-                console.log(response.data);
-                
-            } catch (error) {
-                this.error =
-                    error instanceof Error
-                        ? error.message
-                        : "An error occurred";
-                console.error(error);
-            } finally {
-                this.isLoading = false;
-            }
-        },
+export const useUsageStore = defineStore('usage', {
+  state: () => ({
+    data: [] as Data[],
+    isLoading: false,
+    error: null as string | null,
+  }),
+  actions: {
+    async fetchUsage() {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        const response = await axios.get<Data[]>(endpoint);
+        this.data = response.data;
+      } catch (error) {
+        this.error = error instanceof Error ? error.message : "An error occurred";
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
     },
+  },
 });

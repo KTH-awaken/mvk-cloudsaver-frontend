@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent, onMounted ,computed} from 'vue'
-import GlasCard from '@/components/GlasCard.vue'
+import { defineComponent, onMounted, computed } from 'vue';
+import GlasCard from '@/components/GlasCard.vue';
 import { useUsageStore } from '@/stores/usage';
 import EnergyChart from "../components/UsageChart.vue";
-import LayoutContainer from '@/components/LayoutContainer.vue'
+import LayoutContainer from '@/components/LayoutContainer.vue';
 import PriceChart from "../components/PriceChart.vue";
 
 export default defineComponent({
@@ -15,24 +15,28 @@ export default defineComponent({
         LayoutContainer,
     },
     setup: () => {
-        const usageStore = useUsageStore()
+        const usageStore = useUsageStore();
 
+        // Since your store now returns an array of Data objects, adjust accordingly
         const resourceName = computed(() => {
-            // Check if usage data is available and has at least one record
-            if (usageStore.usage.length > 0 && usageStore.usage[0].resource_name) {
-                return usageStore.usage[0].resource_name;
+            // Check if usage data is available and has at least one Data object
+            if (usageStore.data.length > 0 && usageStore.data[0].resource_name) {
+                return usageStore.data[0].resource_name;
             }
             return 'Unknown'; // Default value or handling when no data is available
         });
-        onMounted(() => {
-            usageStore.fetchUsage()
-            console.log("XXXXXXmdsdddmd"+usageStore.usage);
-        })
 
-        return { usageStore,resourceName }
+        onMounted(() => {
+            usageStore.fetchUsage();
+            // Updated to reflect the new data structure
+            console.log("Data fetched: ", usageStore.data);
+        });
+
+        return { resourceName };
     }
 })
 </script>
+
 
 <template>
     <LayoutContainer>
@@ -56,13 +60,13 @@ export default defineComponent({
 
             <div class="flex flex gap-3 justify-between m-t-5">
                 <div class="outlined-container w-full mb-3">
-                    <p class="mb-4 text-lg">Energy Consumption Overview</p>
+                    <p class="mb-20 text-lg">Energy Consumption Overview</p>
                     <EnergyChart class="min-h-80" />
                 </div>
-                <div class="outlined-container w-full mb-3">
+                <!-- <div class="outlined-container w-full mb-3">
                     <p class="mb-4 text-lg">Energy Cost Estimation Overview</p>
                     <PriceChart class="min-h-80"/>
-                </div>
+                </div> -->
             </div>
         </GlasCard>
 
@@ -71,6 +75,7 @@ export default defineComponent({
 <style>
    .outlined-container{
         width: 100%;
+        height: 30rem;
         outline: solid 3px var(--primary-dark);
         padding: 20px;
         border-radius: 10px;
