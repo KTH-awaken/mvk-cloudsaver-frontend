@@ -28,7 +28,7 @@ export default defineComponent({
 <template>
     <GlasCard @click="toggle" class="cursor-pointer">
         <div class="flex justify-between items-center">
-            <h3 class="font-medium text-lg">{{ title }}</h3>
+            <div class="flex items-center gap-1"><h3 class="font-medium text-lg">Pod: </h3> <p>{{ title }}</p></div>
             <p :class="['text-2xl', { 'rotate-180': !isExpanded }]">^</p>
         </div>
         <div class="flex flex-col gap-3" v-if="isExpanded">
