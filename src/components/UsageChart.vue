@@ -1,143 +1,242 @@
 <template>
-    <div>
-      <Chart
-        id="energy-chart"
-        :options="chartOptions"
-        :data="chartData"
-      />
-    </div>
-  </template>
-  
-  <script lang="ts">
-  import { Line  } from 'vue-chartjs';
-  import { useUsageStore } from '@/stores/usage';
-  import {
-    defineComponent,
-    ref,
-    onMounted,
-    watch,
-    computed
-  } from 'vue';
-  
-  // Assuming these interfaces are imported or defined somewhere in your project
-  interface PodUsage {
-    custom_name: string;
-    namespace: string;
-    pod_name: string;
-    resource_name: string;
-    usage: UsageRecord[];
+  <div v-if="usageStore.isLoading">Loading...</div>
+  <div v-else-if="usageStore.error">{{ usageStore.error }}</div>
+  <div v-else>
+    <canvas id="usageChart"></canvas>
+  </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useUsageStore } from '@/stores/usage';
+import { Chart, registerables } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
+Chart.register(...registerables);
+
+const usageStore = useUsageStore();
+
+onMounted(async () => {
+  await usageStore.fetchUsage();
+
+  if (!usageStore.error) {
+    const datasets = usageStore.data.map((dataSet, index) => ({
+      label: dataSet.label,
+      data: dataSet.usage.map(u => ({
+        x: new Date(u.timestamp * 1000),
+        y: u.cpu_percentage
+      })),
+      fill: false,
+      borderColor: getRandomColor(),
+      lineTension: 0.1
+    }));
+
+    const ctx = document.getElementById('usageChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: { datasets },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              tooltipFormat: 'll HH:mm',
+              parser: 'timestamp', // If using UNIX timestamps, specify the parser here
+            },
+            title: {
+              display: true,
+              text: 'Time'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'CPU Usage Percentage'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
   }
-  
-  interface UsageRecord {
-    _id: string;
-    cpu_usage: string;
-    memory_usage: string;
-    timestamp: number;
-    energy_consumption: string; // this will be in kWh
-  }
-
-  interface ChartData {
-  labels: string[];
-  datasets: Dataset[];
-}
-interface Dataset {
-  label: string;
-  data: number[];
-  borderColor: string;
-  fill: boolean;
-}
-
-function djinkigkahnGineusGetColor(name: string){
-    let hash = 0;
-    for (let i =0; i <name.length; i++){
-        const char = name.charCodeAt(i);
-        hash = (hash <<5) - hash +char;
-        hash = hash & hash;
-    }
-    let colorToReturn ='#';
-    for (let i = 0; i< 3; i++){
-      const value = (hash>> (i * 8)) & 0xFF;
-      colorToReturn += ('00' + value.toString(16)).slice(-2)
-    }
-
-    return colorToReturn;
-}
-  
-export default defineComponent({
-  name: 'EnergyChart',
-  components: { Chart: Line },
-
-  setup() {
-    const usageStore = useUsageStore();
-    const chartData = ref<ChartData>({ labels: [], datasets: [] });
-
-    // Fetch the usage data when the component is mounted
-    onMounted(() => {
-    usageStore.fetchUsage();
-    });
-
-    // Reactive effect to update the chart data when the usage data changes
-    watch(() => usageStore.usage, (newUsage: PodUsage[]) => {
-    if (newUsage && newUsage.length > 0) {
-        const namespaceData: Record<string, number[]> = {};
-
-        // Group usage records by namespace
-        newUsage.forEach(podUsage => {
-        const namespace = podUsage.namespace;
-        if (!namespaceData[namespace]) {
-            namespaceData[namespace] = [];
-        }
-        podUsage.usage.forEach(record => {
-            namespaceData[namespace].push(parseFloat(record.energy_consumption));
-        });
-        });
-
-        // Generate datasets for the chart
-        chartData.value.datasets = Object.entries(namespaceData).map(([namespace, data]) => ({
-        label: namespace,
-        data: data,
-        borderColor: djinkigkahnGineusGetColor(namespace),
-        fill: false,
-        }));
-        // Set the labels for the x-axis
-        chartData.value.labels = newUsage.map(podUsage => podUsage.usage.map(record => new Date(record.timestamp).toLocaleTimeString())).flat();
-    }
-    }, { immediate: true });
-
-    //Chart options
-  const chartOptions = ref({
-    responsive: true,
-    plugins: {
-        legend: {
-        display: true,
-        },
-        title: {
-        display: true,
-        text: 'Energy Consumption Chart',
-        },
-    },
-    scales: {
-        y: {
-        title: {
-            display: true,
-            text: 'Energy Consumption (kWh)',
-        },
-        },
-    },
-    });
-    //Total usage
-    const totalUsage = computed(() => {
-    return chartData.value.datasets.reduce((total, dataset) => {
-        return total + dataset.data.reduce((sum, value) => sum + value, 0);
-    }, 0);
-    });
-
-    return {
-    chartData,
-    chartOptions,
-    totalUsage
-    };
-}
 });
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 </script>
-  
+
+<style scoped>
+#usageChart {
+  max-height: 400px;
+}
+</style>
+
+ 
+ 
+ <!-- <template>
+  <div v-if="usageStore.isLoading">Loading...</div>
+  <div v-else-if="usageStore.error">{{ usageStore.error }}</div>
+  <div v-else>
+    <div v-for="(dataSet, index) in usageStore.data" :key="dataSet.label">
+      <canvas :id="`chart-${index}`"></canvas>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useUsageStore } from '@/stores/usage';
+import { Chart } from 'chart.js';
+
+const usageStore = useUsageStore();
+
+onMounted(async () => {
+  await usageStore.fetchUsage();
+
+  if (!usageStore.error) {
+    usageStore.data.forEach((dataSet, index) => {
+      const ctx = document.getElementById(`chart-${index}`).getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: dataSet.label,
+              data: dataSet.usage.map(u => ({
+                x: new Date(u.timestamp * 1000),
+                y: parseFloat(u.cpu_usage)
+              })),
+              fill: false,
+              borderColor: getRandomColor(),
+              lineTension: 0.1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                unit: 'second'
+              },
+              distribution: 'linear'
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          }
+        }
+      });
+    });
+  }
+});
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+</script> -->
+
+<!-- 
+<template>
+  <div v-if="usageStore.isLoading">Loading...</div>
+  <div v-else-if="usageStore.error">{{ usageStore.error }}</div>
+  <div v-else>
+    <canvas id="usageChart"></canvas>
+  </div>
+</template>
+
+<script setup>
+import { onMounted } from 'vue';
+import { useUsageStore } from '@/stores/usage';
+import { Chart, registerables } from 'chart.js';
+
+Chart.register(...registerables);
+
+const usageStore = useUsageStore();
+
+onMounted(async () => {
+  await usageStore.fetchUsage();
+
+  if (!usageStore.error) {
+    const datasets = usageStore.data.map((dataSet, index) => ({
+      label: dataSet.label,
+      data: dataSet.usage.map(u => ({
+        x: new Date(u.timestamp * 1000),
+        y: u.cpu_percentage
+      })),
+      fill: false,
+      borderColor: getRandomColor(),
+      lineTension: 0.1
+    }));
+
+    const ctx = document.getElementById('usageChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: { datasets },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              tooltipFormat: 'll HH:mm'
+            },
+            title: {
+              display: true,
+              text: 'Time'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'CPU Usage Percentage'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: true
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+  }
+});
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+</script>
+
+<style scoped>
+#usageChart {
+  max-height: 400px;
+}
+</style> -->
