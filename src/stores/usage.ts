@@ -15,29 +15,32 @@ interface UsageRecord {
     timestamp: number;
     cpu_percentage: string;
     energy_consumption: string;
-
-  }
+}
 
 //todo by till rikitg resource name
-const endpoint = "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/AFRY"
+const endpoint =
+    // "https://cloudsaverbackendapi.app.cloud.cbh.kth.se/api/systeminfo/AFRY";
+    "http://localhost:8080/api/systeminfo/AFRY";
 
 export const useUsageStore = defineStore({
-    id: 'usage',
+    id: "usage",
     state: () => ({
         usage: [] as PodUsage[],
         isLoading: false,
         error: null as string | null,
     }),
     actions: {
-    
         async fetchUsage() {
             this.usage = [];
             this.error = null;
             this.isLoading = true;
+
             try {
-                const url = endpoint
-                const response = await axios.get(url);                                                
+                const url = endpoint;
+                const response = await axios.get(url);
                 this.usage = response.data;
+                console.log(response.data);
+                
             } catch (error) {
                 this.error =
                     error instanceof Error
@@ -49,4 +52,4 @@ export const useUsageStore = defineStore({
             }
         },
     },
-})
+});
