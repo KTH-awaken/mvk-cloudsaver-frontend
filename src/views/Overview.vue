@@ -21,7 +21,7 @@ export default defineComponent({
         // Since your store now returns an array of Data objects, adjust accordingly
         const resourceName = computed(() => {
             // Check if usage data is available and has at least one Data object
-            if (usageStore.data.length > 0 && usageStore.data[0].resource_name) {
+            if (usageStore.data.length > 0 && usageStore.data[1].resource_name) {
                 return usageStore.data[0].resource_name;
             }
             return 'Unknown'; // Default value or handling when no data is available
@@ -53,7 +53,7 @@ export default defineComponent({
     
     
                     <div class="flex flex-col justify-center items-center">
-                        <h1 class="font-semibold text-3xl">{{ analysisStore.usage[0].content[1]['value']  }} wh</h1>
+                        <h1 class="font-semibold text-3xl">{{ analysisStore.usage[1].content[1]['value']  }} wh</h1>
                         <!-- <span>kwh</span> -->
                     </div>
                 </div>
