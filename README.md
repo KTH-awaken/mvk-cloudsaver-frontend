@@ -1,10 +1,17 @@
 # frontend
 ![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/9ff50bcf-0ec4-4b5c-ab37-de23996c1b93)
-![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/dec2780a-24ee-482f-b161-5cb05b21e24b)
-![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/fe48e7d9-d2ab-44fe-83c9-abca734807a5)
-![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/d97258c6-f32f-44fe-99f5-5f37c6a7d3d9)
-![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/92685cb3-bab9-4ec1-a6f0-b4bf3f4c6743)
-![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/cab1fe01-d3d1-4285-807f-c822295267b0)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/4c710f5a-dd74-4df7-a8d0-f3f2e5a16333)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/2b060469-a904-43cd-aa0a-e217de6d41a0)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/016c4f7c-c178-4981-af83-27fab4cd0cd0)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/cafd4a32-dd7f-4776-97b5-fffb12491661)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/15cd66bb-9869-40c7-a32e-d1ecdb3c6a2d)
+![image](https://github.com/KTH-awaken/mvk-cloudsaver-frontend/assets/100699584/760eaaae-d451-456d-985f-0b40bbf553b1)
+
+
+
+
+
+
 
 
 
