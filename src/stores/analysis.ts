@@ -63,7 +63,7 @@ export const useAnalysisStore = defineStore({
                         pod_name: item.pod_name,
                         content: [
                             {value: "%"+ averageCpu.toFixed(2).toString(), key: "Average CPU Usage"},
-                            {value: totalEnergyConsumption.toFixed(2).toString()+ "Kvh", key: "Total Energy Consumption"}
+                            {value: totalEnergyConsumption.toFixed(2), key: "Total Energy Consumption"}
                         ]
                     };
                 });
