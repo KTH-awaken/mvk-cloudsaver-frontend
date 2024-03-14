@@ -53,7 +53,7 @@ export default defineComponent({
     
     
                     <div class="flex flex-col justify-center items-center">
-                        <h1 class="font-semibold text-3xl">{{ analysisStore.usage[1].content[1]['value']  }} wh</h1>
+                        <h1 class="font-semibold text-3xl">{{ analysisStore.usage[1].content[1]['value']  }} Wh</h1>
                         <!-- <span>kwh</span> -->
                     </div>
                 </div>
