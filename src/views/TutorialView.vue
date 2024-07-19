@@ -94,10 +94,12 @@ export default defineComponent({
                             <input class="input-name" type="text" placeholder="Resource Name">
                         </GlasCard>
                     </div>
-                </div>
+                </div>                
+
             </div>
             <div class="bottom-buttons pl-6 pr-6">
-                <button @click="prevStep" class="bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">Previous</button>
+                <button v-if="step < 2" @click="prevStep" class="bg-transparent  rounded-md button"></button>
+                <button v-else @click="prevStep" class="bg-transparent hover:bg-primary-dark hover:text-white text-primary p-2 outline outline-1 hover:outline-none rounded-md button">Previous</button>
                 <button @click ="nextStep" class="bg-primary-dark text-white p-2 rounded-md w-1 button hover:bg-primary">{{ step < 3 ? 'Next' : 'Finish' }}</button>
             </div>
     </div>
