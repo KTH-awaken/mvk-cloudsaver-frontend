@@ -185,7 +185,8 @@ export default defineComponent({
 }
  
 .stepper {
-  width: 25px;
+
+  width: 50px;
   height: 25px;
   border-radius: 50%;
   position: relative; 
